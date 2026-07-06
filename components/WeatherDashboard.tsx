@@ -5,7 +5,7 @@ import { SearchBar } from "@/components/SearchBar";
 import { CurrentWeather } from "@/components/CurrentWeather";
 import { ForecastGrid } from "@/components/ForecastGrid";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Cloud } from "lucide-react";
+import { Cloud, Sparkles } from "lucide-react";
 
 interface WeatherData {
   city: string;
@@ -97,49 +97,85 @@ export function WeatherDashboard() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center gap-3">
-          <Cloud className="w-10 h-10 md:w-12 md:h-12" />
-          Weather Dashboard
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      {/* Header */}
+      <div className="text-center mb-8 md:mb-12 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+        <div className="inline-flex items-center gap-3 mb-4">
+          <div className="p-3 glass rounded-2xl">
+            <Cloud className="w-7 h-7 md:w-8 md:h-8 text-white" />
+          </div>
+        </div>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 tracking-tight">
+          Weather
+          <span className="bg-gradient-to-r from-yellow-300 to-amber-400 bg-clip-text text-transparent"> Dash</span>
         </h1>
-        <p className="text-white/80 text-lg">
-          Check current conditions and 7-day forecast for any city
+        <p className="text-white/70 text-base md:text-lg max-w-md mx-auto leading-relaxed">
+          Real-time weather insights and forecasts for any city worldwide
         </p>
       </div>
 
-      <SearchBar onSearch={handleSearch} loading={loading} />
+      {/* Search */}
+      <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
+        <SearchBar onSearch={handleSearch} loading={loading} />
+      </div>
 
+      {/* Error */}
       {error && (
-        <div className="mt-6 max-w-md mx-auto">
-          <Alert variant="destructive" className="bg-red-50 border-red-200">
-            <AlertDescription className="text-red-800">{error}</AlertDescription>
+        <div className="mt-6 max-w-md mx-auto animate-fade-in">
+          <Alert className="bg-red-500/20 border-red-400/30 text-white backdrop-blur-sm">
+            <AlertDescription>{error}</AlertDescription>
           </Alert>
         </div>
       )}
 
+      {/* Weather Content */}
       {weatherData && (
-        <div className="mt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <div className="max-w-md mx-auto">
-            <CurrentWeather
-              city={weatherData.city}
-              temperature={weatherData.current.temperature}
-              humidity={weatherData.current.humidity}
-              windSpeed={weatherData.current.windSpeed}
-              weatherCode={weatherData.current.weatherCode}
-              isDay={weatherData.current.isDay}
-            />
-          </div>
+        <div className="mt-10 animate-slide-up">
+          <CurrentWeather
+            city={weatherData.city}
+            temperature={weatherData.current.temperature}
+            humidity={weatherData.current.humidity}
+            windSpeed={weatherData.current.windSpeed}
+            weatherCode={weatherData.current.weatherCode}
+            isDay={weatherData.current.isDay}
+          />
           <ForecastGrid forecast={weatherData.forecast} />
         </div>
       )}
 
+      {/* Empty State */}
       {!weatherData && !error && !loading && (
-        <div className="mt-16 text-center">
-          <div className="text-6xl mb-4">🌍</div>
-          <p className="text-white/70 text-lg">
-            Enter a city name above to get started
+        <div className="mt-16 md:mt-24 text-center animate-fade-in">
+          <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 glass rounded-3xl mb-6 animate-float">
+            <span className="text-5xl md:text-6xl">🌍</span>
+          </div>
+          <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">
+            Discover the Weather
+          </h3>
+          <p className="text-white/60 text-sm md:text-base">
+            Enter a city name to explore current conditions and forecasts
           </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            {['Tokyo', 'Paris', 'New York', 'Sydney'].map((city) => (
+              <button
+                key={city}
+                onClick={() => handleSearch(city)}
+                className="px-4 py-2 glass rounded-full text-white/80 text-sm hover:bg-white/20 transition-colors hover:text-white"
+              >
+                {city}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Loading State */}
+      {loading && (
+        <div className="mt-16 text-center animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-6 py-3 glass rounded-full">
+            <Sparkles className="w-4 h-4 text-white/70 animate-pulse" />
+            <span className="text-white/70 text-sm">Fetching weather data...</span>
+          </div>
         </div>
       )}
     </div>
