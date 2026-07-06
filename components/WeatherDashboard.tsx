@@ -5,7 +5,7 @@ import { SearchBar } from "@/components/SearchBar";
 import { CurrentWeather } from "@/components/CurrentWeather";
 import { ForecastGrid } from "@/components/ForecastGrid";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Cloud, Sparkles } from "lucide-react";
+import { Cloud } from "lucide-react";
 
 interface WeatherData {
   city: string;
@@ -101,15 +101,15 @@ export function WeatherDashboard() {
       {/* Header */}
       <div className="text-center mb-8 md:mb-12 animate-slide-up" style={{ animationDelay: '0.1s' }}>
         <div className="inline-flex items-center gap-3 mb-4">
-          <div className="p-3 glass rounded-2xl">
-            <Cloud className="w-7 h-7 md:w-8 md:h-8 text-white" />
+          <div className="p-3 bg-slate-800/80 rounded-2xl border border-teal-500/20">
+            <Cloud className="w-7 h-7 md:w-8 md:h-8 text-teal-400" />
           </div>
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 tracking-tight">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-100 mb-3 tracking-tight">
           Weather
-          <span className="bg-gradient-to-r from-yellow-300 to-amber-400 bg-clip-text text-transparent"> Dash</span>
+          <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent"> Dash</span>
         </h1>
-        <p className="text-white/70 text-base md:text-lg max-w-md mx-auto leading-relaxed">
+        <p className="text-slate-400 text-base md:text-lg max-w-md mx-auto leading-relaxed">
           Real-time weather insights and forecasts for any city worldwide
         </p>
       </div>
@@ -122,7 +122,7 @@ export function WeatherDashboard() {
       {/* Error */}
       {error && (
         <div className="mt-6 max-w-md mx-auto animate-fade-in">
-          <Alert className="bg-red-500/20 border-red-400/30 text-white backdrop-blur-sm">
+          <Alert className="bg-red-950/50 border-red-500/30 text-red-200">
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         </div>
@@ -146,13 +146,13 @@ export function WeatherDashboard() {
       {/* Empty State */}
       {!weatherData && !error && !loading && (
         <div className="mt-16 md:mt-24 text-center animate-fade-in">
-          <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 glass rounded-3xl mb-6 animate-float">
+          <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 bg-slate-800/80 rounded-3xl mb-6 animate-float border border-teal-500/20">
             <span className="text-5xl md:text-6xl">🌍</span>
           </div>
-          <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">
+          <h3 className="text-xl md:text-2xl font-semibold text-slate-200 mb-2">
             Discover the Weather
           </h3>
-          <p className="text-white/60 text-sm md:text-base">
+          <p className="text-slate-500 text-sm md:text-base">
             Enter a city name to explore current conditions and forecasts
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -160,7 +160,7 @@ export function WeatherDashboard() {
               <button
                 key={city}
                 onClick={() => handleSearch(city)}
-                className="px-4 py-2 glass rounded-full text-white/80 text-sm hover:bg-white/20 transition-colors hover:text-white"
+                className="px-4 py-2 bg-slate-800/80 rounded-full text-teal-300 text-sm border border-teal-500/30 hover:bg-teal-500/20 hover:border-teal-500/50 transition-all hover:text-teal-200"
               >
                 {city}
               </button>
@@ -172,9 +172,9 @@ export function WeatherDashboard() {
       {/* Loading State */}
       {loading && (
         <div className="mt-16 text-center animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-6 py-3 glass rounded-full">
-            <Sparkles className="w-4 h-4 text-white/70 animate-pulse" />
-            <span className="text-white/70 text-sm">Fetching weather data...</span>
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-slate-800/80 rounded-full border border-teal-500/20">
+            <span className="w-4 h-4 border-2 border-teal-500/30 border-t-teal-400 rounded-full animate-spin" />
+            <span className="text-teal-300 text-sm">Fetching weather data...</span>
           </div>
         </div>
       )}
